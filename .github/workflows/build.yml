@@ -5,9 +5,14 @@ on:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   AWS_REGION: ap-south-1
   ECR_REPOSITORY: photo-api
+  ECR_REGISTRY: 969318514380.dkr.ecr.ap-south-1.amazonaws.com
 
 jobs:
   build:
@@ -15,26 +20,25 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials using OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ap-south-1
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to ECR
-        run: |
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 969318514380.dkr.ecr.ap-south-1.amazonaws.com
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build Docker image
         run: |
-          docker build -t photo-api ./photo-api
+          docker build -t $ECR_REPOSITORY ./photo-api
 
-      - name: Tag image
+      - name: Tag Docker image
         run: |
-          docker tag photo-api:latest 969318514380.dkr.ecr.ap-south-1.amazonaws.com/photo-api:dev
+          docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:dev
 
-      - name: Push image
+      - name: Push Docker image to ECR
         run: |
-          docker push 969318514380.dkr.ecr.ap-south-1.amazonaws.com/photo-api:dev
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:dev
