@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photo-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: photo-api
+  template:
+    metadata:
+      labels:
+        app: photo-api
+    spec:
+      containers:
+      - name: photo-api
+        image: 969318514380.dkr.ecr.ap-south-1.amazonaws.com/photo-api:dev
+        ports:
+        - containerPort: 8000
