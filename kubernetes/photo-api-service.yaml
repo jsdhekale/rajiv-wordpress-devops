@@ -8,6 +8,7 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 8000
+      port: 80
       targetPort: 8000
-  type: ClusterIP
+      nodePort: 30896
+  type: NodePort
