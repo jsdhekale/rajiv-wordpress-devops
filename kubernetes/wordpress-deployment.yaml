@@ -18,15 +18,15 @@ spec:
         - name: ecr-secret
       containers:
         - name: wordpress
-          image: 963918514380.dkr.ecr.ap-south-1.amazonaws.com/rajiv-wordpress:latest
+          image: 969318514380.dkr.ecr.ap-south-1.amazonaws.com/rajiv-wordpress:fixed
           ports:
             - containerPort: 80
           env:
             - name: WORDPRESS_DB_HOST
-              value: wordpress-db.cvfflefrz1xy.ap-south-1.rds.amazonaws.com:3306
+              value: "wordpress-eks-db.cvvflefr21xy.ap-south-1.rds.amazonaws.com:3306"
             - name: WORDPRESS_DB_USER
-              value: admin
+              value: "wordpressadmin"
             - name: WORDPRESS_DB_PASSWORD
-              value: Wordpress123!
+              value: "Wordpress123!"
             - name: WORDPRESS_DB_NAME
-              value: wordpress
+              value: "wordpress"
