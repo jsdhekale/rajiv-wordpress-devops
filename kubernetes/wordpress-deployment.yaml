@@ -23,7 +23,7 @@ spec:
             - containerPort: 80
           env:
             - name: WORDPRESS_DB_HOST
-              value: "wordpress-eks-db.cvvflefr21xy.ap-south-1.rds.amazonaws.com:3306"
+              value: "wordpress-db.cvff1efrz1xy.ap-south-1.rds.amazonaws.com"
             - name: WORDPRESS_DB_USER
               value: "wordpressadmin"
             - name: WORDPRESS_DB_PASSWORD
