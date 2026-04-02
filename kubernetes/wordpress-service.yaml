@@ -7,6 +7,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-south-1:969318514380:certificate/4c0e7183-fe06-4abe-b449-e493e3872ecd
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-02fbea331eb7857fe,subnet-08766cb40136cece2,subnet-0a303e1ed28f25358
 spec:
   selector:
     app: wordpress
