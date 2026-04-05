@@ -4,7 +4,7 @@ metadata:
   name: wordpress-deployment
   labels:
     app: wordpress
-    version: v2    
+    version: v3    
 spec:
   replicas: 1
   selector:
