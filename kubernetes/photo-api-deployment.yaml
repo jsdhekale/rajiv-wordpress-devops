@@ -15,5 +15,6 @@ spec:
       containers:
       - name: photo-api
         image: 969318514380.dkr.ecr.ap-south-1.amazonaws.com/photo-api:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
