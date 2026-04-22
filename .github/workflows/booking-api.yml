@@ -1,0 +1,44 @@
+name: Build and Push Booking API Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'booking-api/**'
+      - '.github/workflows/booking-api.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t booking-api:${{ github.sha }} ./booking-api
+
+      - name: Tag Docker image
+        run: |
+          docker tag booking-api:${{ github.sha }} 969318514380.dkr.ecr.ap-south-1.amazonaws.com/booking-api:${{ github.sha }}
+          docker tag booking-api:${{ github.sha }} 969318514380.dkr.ecr.ap-south-1.amazonaws.com/booking-api:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push 969318514380.dkr.ecr.ap-south-1.amazonaws.com/booking-api:${{ github.sha }}
+          docker push 969318514380.dkr.ecr.ap-south-1.amazonaws.com/booking-api:latest
