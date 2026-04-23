@@ -16,6 +16,14 @@ spec:
     - host: snehaldigitalphoto.com
       http:
         paths:
+          - path: /bookings
+            pathType: Prefix
+            backend:
+              service:
+                name: booking-api-service
+                port:
+                  number: 80
+
           - path: /
             pathType: Prefix
             backend:
